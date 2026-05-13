@@ -34,43 +34,45 @@ interface AppState {
 
 const AppContext = createContext<AppState | null>(null)
 
+const INITIAL_CHECK_INS: CheckInData[] = [
+  // Sample historical data
+  {
+    skyTone: 'stormy', situation: 'เพื่อนแย่งของเล่น', thought: 'ไม่ยุติธรรมเลย!',
+    sensation: 'ตัวร้อน', feeling: 'โกรธ', behavior: 'อยากตะโกน',
+    emotion: 'anger', intensity: 75, character: 'Fizz', regulationTool: 'ลมหายใจมังกร',
+    postSkyTone: 'cloudy', timestamp: new Date(Date.now() - 86400000 * 6)
+  },
+  {
+    skyTone: 'rainy', situation: 'สอบได้คะแนนไม่ดี', thought: 'หนูไม่เก่งเลย',
+    sensation: 'ตัวหนัก', feeling: 'เศร้า', behavior: 'อยากซ่อน',
+    emotion: 'sadness', intensity: 60, character: 'Puddles', regulationTool: 'ยืดเหยียดรับแสงอาทิตย์',
+    postSkyTone: 'cloudy', timestamp: new Date(Date.now() - 86400000 * 5)
+  },
+  {
+    skyTone: 'sunny', situation: 'ได้รางวัลจากคุณครู', thought: 'หนูทำได้!',
+    sensation: 'เบาสบาย', feeling: 'ดีใจ', behavior: 'อยากกระโดด',
+    emotion: 'joy', intensity: 90, character: 'Ray', regulationTool: '',
+    postSkyTone: 'sunny', timestamp: new Date(Date.now() - 86400000 * 4)
+  },
+  {
+    skyTone: 'cloudy', situation: 'ไม่แน่ใจว่าจะเล่นกับใคร', thought: 'เพื่อนๆ ชอบหนูไหมนะ',
+    sensation: 'มึนงง', feeling: 'กังวล', behavior: 'อยากอยู่คนเดียว',
+    emotion: 'fear', intensity: 45, character: 'Misty', regulationTool: 'ภาพถ่ายแห่งความสุข',
+    postSkyTone: 'sunny', timestamp: new Date(Date.now() - 86400000 * 2)
+  },
+  {
+    skyTone: 'stormy', situation: 'น้องทำลายของที่วาดไว้', thought: 'เกลียดมาก!',
+    sensation: 'ตัวสั่น', feeling: 'โมโห', behavior: 'อยากทุบอะไรสักอย่าง',
+    emotion: 'anger', intensity: 85, character: 'Fizz', regulationTool: 'บีบมะนาว',
+    postSkyTone: 'rainy', timestamp: new Date(Date.now() - 86400000 * 1)
+  },
+]
+
 export function AppProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<UserRole>(null)
   const [currentPage, setPage] = useState(0)
   const [checkIn, setCheckIn] = useState<Partial<CheckInData>>({})
-  const [allCheckIns, setAllCheckIns] = useState<CheckInData[]>([
-    // Sample historical data
-    {
-      skyTone: 'stormy', situation: 'เพื่อนแย่งของเล่น', thought: 'ไม่ยุติธรรมเลย!',
-      sensation: 'ตัวร้อน', feeling: 'โกรธ', behavior: 'อยากตะโกน',
-      emotion: 'anger', intensity: 75, character: 'Fizz', regulationTool: 'ลมหายใจมังกร',
-      postSkyTone: 'cloudy', timestamp: new Date(Date.now() - 86400000 * 6)
-    },
-    {
-      skyTone: 'rainy', situation: 'สอบได้คะแนนไม่ดี', thought: 'หนูไม่เก่งเลย',
-      sensation: 'ตัวหนัก', feeling: 'เศร้า', behavior: 'อยากซ่อน',
-      emotion: 'sadness', intensity: 60, character: 'Puddles', regulationTool: 'ยืดเหยียดรับแสงอาทิตย์',
-      postSkyTone: 'cloudy', timestamp: new Date(Date.now() - 86400000 * 5)
-    },
-    {
-      skyTone: 'sunny', situation: 'ได้รางวัลจากคุณครู', thought: 'หนูทำได้!',
-      sensation: 'เบาสบาย', feeling: 'ดีใจ', behavior: 'อยากกระโดด',
-      emotion: 'joy', intensity: 90, character: 'Ray', regulationTool: '',
-      postSkyTone: 'sunny', timestamp: new Date(Date.now() - 86400000 * 4)
-    },
-    {
-      skyTone: 'cloudy', situation: 'ไม่แน่ใจว่าจะเล่นกับใคร', thought: 'เพื่อนๆ ชอบหนูไหมนะ',
-      sensation: 'มึนงง', feeling: 'กังวล', behavior: 'อยากอยู่คนเดียว',
-      emotion: 'fear', intensity: 45, character: 'Misty', regulationTool: 'ภาพถ่ายแห่งความสุข',
-      postSkyTone: 'sunny', timestamp: new Date(Date.now() - 86400000 * 2)
-    },
-    {
-      skyTone: 'stormy', situation: 'น้องทำลายของที่วาดไว้', thought: 'เกลียดมาก!',
-      sensation: 'ตัวสั่น', feeling: 'โมโห', behavior: 'อยากทุบอะไรสักอย่าง',
-      emotion: 'anger', intensity: 85, character: 'Fizz', regulationTool: 'บีบมะนาว',
-      postSkyTone: 'rainy', timestamp: new Date(Date.now() - 86400000 * 1)
-    },
-  ])
+  const [allCheckIns, setAllCheckIns] = useState<CheckInData[]>(INITIAL_CHECK_INS)
 
   const updateCheckIn = (data: Partial<CheckInData>) => setCheckIn(prev => ({ ...prev, ...data }))
   const saveCheckIn = () => {

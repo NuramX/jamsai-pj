@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Settings, Mic, Brush, ArrowRight, Cloud, CloudRain, CloudLightning, Sun, Wind, Frown, GripVertical, CloudDrizzle, Heart, CheckCircle, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { Settings, Mic, Brush, ArrowRight, Cloud, CloudRain, CloudLightning, Sun, Wind, GripVertical, CloudDrizzle, Heart, CheckCircle, X } from "lucide-react";
+import { motion, PanInfo } from "framer-motion";
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -242,7 +242,7 @@ function SkyMatch({ answers, onNext }: { answers: { situation: string, thought: 
   const [tiedEmotions, setTiedEmotions] = useState<typeof initialBucketsData>([]);
   const bucketRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  const handleDragEnd = (event: any, info: any, pieceId: string) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo, pieceId: string) => {
     // info.point is relative to the page document, not the viewport
     const { x, y } = info.point;
     
@@ -325,7 +325,7 @@ function SkyMatch({ answers, onNext }: { answers: { situation: string, thought: 
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }} className="text-7xl mb-6">🎉</motion.div>
         <h2 className="text-3xl font-extrabold text-[#0369a1] mb-2">สรุปผล!</h2>
         <p className="text-lg text-gray-600 mb-8">อารมณ์ที่เป็นผู้มาเยือนของเธอวันนี้คือ...</p>
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} delay={0.3} className="bg-white p-10 rounded-[3rem] shadow-[0_8px_30px_-15px_rgba(0,0,0,0.1)] border-4 border-[#fecdd3] mb-12 w-full max-w-sm">
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="bg-white p-10 rounded-[3rem] shadow-[0_8px_30px_-15px_rgba(0,0,0,0.1)] border-4 border-[#fecdd3] mb-12 w-full max-w-sm">
            <h3 className="text-4xl font-black text-rose-600 uppercase tracking-wider">{finalEmotion}</h3>
         </motion.div>
         <button onClick={onNext} className="bg-[#1e6091] text-white px-8 py-4 rounded-full font-bold text-xl flex items-center gap-3 shadow-lg hover:bg-[#184e77] transition-colors">
@@ -482,7 +482,7 @@ function MeetVisitor({ onNext }: { onNext: () => void }) {
           </p>
           
           <h2 className="text-2xl font-extrabold text-[#1e293b] mb-6 leading-snug">
-            That's <span className="text-rose-600">Fizz</span>, the <br/>Rage cloud.
+            That&apos;s <span className="text-rose-600">Fizz</span>, the <br/>Rage cloud.
           </h2>
           
           <p className="text-[#475569] font-medium leading-relaxed">
@@ -532,7 +532,7 @@ function SuggestionMenu({ onNext }: { onNext: () => void }) {
              <CloudLightning size={40} className="text-rose-500" />
           </div>
           
-          <h2 className="text-2xl font-bold text-[#1e293b] mb-4">Let's help Fizz.</h2>
+          <h2 className="text-2xl font-bold text-[#1e293b] mb-4">Let&apos;s help Fizz.</h2>
           <p className="text-gray-600 font-medium text-sm leading-relaxed">
             ฟิซกำลังรู้สึกเปรี๊ยะๆ เพราะหอคอยเลโก้โดนพัง เราควรใช้เครื่องมือท้องฟ้าชิ้นไหนดีนะ?
           </p>

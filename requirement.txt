@@ -35,19 +35,19 @@ Goal: Map the CBT cycle and externalize the emotion.
 	- Logic: BERT predicts the Plutchik emotion + intensity based on Gate 2 (Thought) and Gate 4 (Feeling).
 	- UI Game: Generates 3 buckets—Predicted Emotion, Plutchik Opposite (Distractor), and Adjacent Wheel Emotion (Dyad).
 	- Action: Child drags their 4 collected variables (Thought, Sensation, Feeling, Behavior) into the correct bucket. The UI requires a 4/4 match to pass.
-- Page 8: Externalization ("Meet Your Visitor"):
+- Page 7: Externalization ("Meet Your Visitor"):
 	- Generates a color-coded cartoon character based on the Plutchik petal (e.g., Red "Fizz" for Anger/Rage; Blue "Puddles" for Sadness).
 	- Script: "Look, Scout! You caught all the pieces. That’s Fizz, the Rage cloud. Fizz is just a visitor in your sky today!"
 	- Feature: "Save State" option to pause and return for Part 2 later in the day.
 
 Epic 2: Part 2 - Self-Regulation Workflow
 Goal: Empower the child to actively regulate their nervous system based on clinical data points.
-- Page 9: The Trigger Confirmation: Validates the child's experience using Part 1 variables (e.g., "Let's help Fizz. You said Fizz is crackling because [Situation]. Ready to find some calm?").
-- Page 10: The Suggestion Menu:
+- Page 8: The Trigger Confirmation: Validates the child's experience using Part 1 variables (e.g., "Let's help Fizz. You said Fizz is crackling because [Situation]. Ready to find some calm?").
+- Page 9: The Suggestion Menu:
 	- UI shows the generated Sky Character interacting with the Situation.
 	- AI recommends 3 tailored "Sky Tools" based on the Sensation variable (e.g., if "Hot Stove" -> 🌬️ Dragon Breath, 🍋 Lemon Squeeze, 🧱 Wall Push).
-- Page 11: Guided Interaction: Step-by-step interactive guidance using rhythmic, calming language and visual pacing (e.g., 3-second tense, 3-second release animations).
-- Page 12: Transformation & Re-Check:
+- Page 10: Guided Interaction: Step-by-step interactive guidance using rhythmic, calming language and visual pacing (e.g., 3-second tense, 3-second release animations).
+- Page 11: Transformation & Re-Check:
 	- Visuals: Sky Character transforms to a calm/alleviated state.
 	- Re-Check: "How is your Sky Tone now?" (Prompts Page 1 options).
 	- Persistence Logic: If Rainy/Stormy is selected again, offer a choice to try another tool or "sit with the feeling." Provide an empathetic exit (e.g., "Some clouds need extra time...") with a passive activity suggestion.
