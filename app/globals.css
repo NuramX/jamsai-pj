@@ -1,384 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800;900&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --sky-dawn: #FFE8CC;
-  --sky-day: #E0F4FF;
-  --sky-blue: #87CEEB;
-  --sky-deep: #4A90D9;
-  --sky-storm: #4A5568;
-  --sky-night: #1A2744;
-  --sun: #FFD166;
-  --peach: #FFAA80;
-  --mint: #A8E6CF;
-  --cloud: #FFFFFF;
-  --radius: 24px;
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Nunito', sans-serif;
-  overflow-x: hidden;
-  background: var(--sky-day);
+@theme {
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  
+  --color-sky-sunny-bg: #FFE5B4; /* Soft peach/yellow */
+  --color-sky-sunny-accent: #FFB347;
+  
+  --color-sky-cloudy-bg: #E0E5EC; /* Soft greyish blue */
+  --color-sky-cloudy-accent: #9BA4B5;
+  
+  --color-sky-rainy-bg: #C1D3FE; /* Soft blue */
+  --color-sky-rainy-accent: #89B0AE;
+  
+  --color-sky-stormy-bg: #3F37C9; /* Deep indigo */
+  --color-sky-stormy-accent: #4CC9F0;
 }
 
-/* Sky gradient backgrounds */
-.sky-sunny {
-  background: linear-gradient(180deg, #87CEEB 0%, #B8E4FF 40%, #FFE8CC 80%, #FFD166 100%);
-}
-.sky-cloudy {
-  background: linear-gradient(180deg, #B0C4DE 0%, #D3DCE6 40%, #E8EDF2 80%, #F0F4F8 100%);
-}
-.sky-rainy {
-  background: linear-gradient(180deg, #4A6FA5 0%, #6B8EC8 40%, #8FAACC 80%, #B8C8D8 100%);
-}
-.sky-stormy {
-  background: linear-gradient(180deg, #2D3748 0%, #4A5568 40%, #718096 80%, #A0AEC0 100%);
-}
-.sky-default {
-  background: linear-gradient(180deg, #87CEEB 0%, #B8E4FF 50%, #E0F4FF 100%);
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #1e293b;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply transition-colors duration-500 ease-in-out;
+  }
 }
 
-/* Cloud shapes */
-.cloud-shape {
-  border-radius: 50px;
-  position: relative;
+/* Utilities for glassmorphism */
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-xl rounded-3xl;
+  }
+  
+  .glass-panel-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/20 shadow-xl rounded-3xl text-white;
+  }
 }
-.cloud-shape::before, .cloud-shape::after {
-  content: '';
-  position: absolute;
-  background: inherit;
-  border-radius: 50%;
-}
-
-/* Floating clouds decoration */
-.bg-cloud {
-  position: absolute;
-  background: rgba(255,255,255,0.6);
-  border-radius: 50px;
-  filter: blur(2px);
-}
-
-/* Card styles */
-.sky-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  border-radius: 32px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 20px 60px rgba(74, 144, 217, 0.15), 0 4px 16px rgba(0,0,0,0.06);
-}
-
-.sky-card-dark {
-  background: rgba(26, 39, 68, 0.85);
-  backdrop-filter: blur(20px);
-  border-radius: 32px;
-  border: 2px solid rgba(74, 144, 217, 0.3);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  color: white;
-}
-
-/* Buttons */
-.btn-primary {
-  background: linear-gradient(135deg, #4A90D9, #2D6FB3);
-  color: white;
-  border-radius: 50px;
-  padding: 14px 32px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(74, 144, 217, 0.4);
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-}
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(74, 144, 217, 0.5);
-}
-.btn-primary:active { transform: translateY(0); }
-
-.btn-secondary {
-  background: rgba(255,255,255,0.9);
-  color: #4A90D9;
-  border-radius: 50px;
-  padding: 12px 28px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1rem;
-  border: 2px solid #4A90D9;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.btn-secondary:hover {
-  background: #4A90D9;
-  color: white;
-  transform: translateY(-2px);
-}
-
-.btn-sun {
-  background: linear-gradient(135deg, #FFD166, #FF9F1C);
-  color: #7A4500;
-  border-radius: 50px;
-  padding: 14px 32px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(255, 166, 0, 0.4);
-  transition: all 0.3s ease;
-}
-.btn-sun:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(255, 166, 0, 0.5);
-}
-
-/* Text styles */
-.font-display { font-family: 'Fredoka One', cursive; }
-.font-body { font-family: 'Nunito', sans-serif; }
-
-/* Emotion character blob */
-.emotion-blob {
-  border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
-  animation: morphBlob 6s ease-in-out infinite;
-}
-@keyframes morphBlob {
-  0%, 100% { border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%; }
-  33% { border-radius: 40% 60% 45% 55% / 55% 45% 55% 45%; }
-  66% { border-radius: 55% 45% 60% 40% / 40% 60% 40% 60%; }
-}
-
-/* Progress bar */
-.progress-sky {
-  background: linear-gradient(90deg, #4A90D9, #87CEEB, #FFD166);
-  border-radius: 50px;
-  height: 8px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Input styles */
-.sky-input {
-  background: rgba(255,255,255,0.9);
-  border: 2px solid rgba(74, 144, 217, 0.3);
-  border-radius: 20px;
-  padding: 14px 20px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1rem;
-  width: 100%;
-  transition: all 0.3s;
-  outline: none;
-  color: #2D3748;
-}
-.sky-input:focus {
-  border-color: #4A90D9;
-  box-shadow: 0 0 0 4px rgba(74, 144, 217, 0.15);
-  background: white;
-}
-
-/* Weather icon cards */
-.weather-option {
-  background: rgba(255,255,255,0.8);
-  border: 3px solid transparent;
-  border-radius: 28px;
-  padding: 24px 20px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-align: center;
-  backdrop-filter: blur(10px);
-}
-.weather-option:hover {
-  transform: translateY(-8px) scale(1.05);
-  border-color: #4A90D9;
-  box-shadow: 0 20px 40px rgba(74, 144, 217, 0.25);
-}
-.weather-option.selected {
-  border-color: #4A90D9;
-  background: linear-gradient(135deg, rgba(74,144,217,0.15), rgba(135,206,235,0.2));
-  box-shadow: 0 12px 32px rgba(74, 144, 217, 0.3);
-  transform: translateY(-4px) scale(1.03);
-}
-
-/* Draggable items */
-.drag-item {
-  background: rgba(255,255,255,0.95);
-  border: 2px solid rgba(74,144,217,0.3);
-  border-radius: 16px;
-  padding: 10px 18px;
-  cursor: grab;
-  transition: all 0.2s;
-  user-select: none;
-}
-.drag-item:active { cursor: grabbing; transform: scale(1.05) rotate(2deg); }
-.drag-item:hover { border-color: #4A90D9; box-shadow: 0 4px 16px rgba(74,144,217,0.2); }
-
-/* Drop zone */
-.drop-zone {
-  border: 3px dashed rgba(74,144,217,0.4);
-  border-radius: 20px;
-  min-height: 80px;
-  transition: all 0.3s;
-}
-.drop-zone.active-drop {
-  border-color: #4A90D9;
-  background: rgba(74,144,217,0.08);
-}
-
-/* Sidebar nav */
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  border-radius: 16px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.25s;
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-}
-.nav-link:hover { background: rgba(255,255,255,0.15); color: white; }
-.nav-link.active { background: rgba(255,255,255,0.2); color: white; }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(74,144,217,0.3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(74,144,217,0.5); }
-
-/* Stars */
-.star {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-}
-
-/* Tooltip */
-.tooltip {
-  position: relative;
-}
-.tooltip:hover::after {
-  content: attr(data-tip);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(26,39,68,0.9);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  font-family: 'Nunito', sans-serif;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.animate-fade-in-up { animation: fadeInUp 0.6s ease both; }
-.animate-fade-in { animation: fadeIn 0.5s ease both; }
-.animate-scale-in { animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.animate-slide-in-right { animation: slideInRight 0.5s ease both; }
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-
-/* Tag chips */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 14px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
-}
-
-/* Dashboard metric cards */
-.metric-card {
-  background: rgba(255,255,255,0.9);
-  border-radius: 24px;
-  padding: 24px;
-  border: 2px solid rgba(255,255,255,0.8);
-  box-shadow: 0 8px 32px rgba(74,144,217,0.1);
-  transition: all 0.3s;
-}
-.metric-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(74,144,217,0.15);
-}
-
-/* Timeline */
-.timeline-line {
-  width: 2px;
-  background: linear-gradient(180deg, #4A90D9, #87CEEB, transparent);
-}
-
-/* Switch toggle */
-.toggle-switch {
-  width: 50px;
-  height: 26px;
-  background: #CBD5E0;
-  border-radius: 13px;
-  position: relative;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.toggle-switch.on { background: #4A90D9; }
-.toggle-switch::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  top: 3px;
-  left: 3px;
-  transition: left 0.3s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.toggle-switch.on::after { left: 27px; }
-
-/* Badge */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  font-weight: 800;
-  font-family: 'Nunito', sans-serif;
-}
-
-/* Glow effect */
-.glow-blue { box-shadow: 0 0 30px rgba(74, 144, 217, 0.5); }
-.glow-yellow { box-shadow: 0 0 30px rgba(255, 209, 102, 0.6); }
-.glow-red { box-shadow: 0 0 30px rgba(255, 68, 68, 0.5); }

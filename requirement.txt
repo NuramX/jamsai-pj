@@ -1,0 +1,101 @@
+Project Name: แจ่มใส: สะพานเชื่อมใจเด็ก คุณครู และครอบครัว
+Platform: Google Classroom Integration (Web/Chromebook/Tablet)
+Target Audience: Primary (Children aged 7–12), Secondary (Parents/Guardians, Teachers)
+Status: Draft / Proposed
+
+1. Executive Summary & Vision
+Product Vision: To proactively prevent mental health challenges in school-aged children through guided, daily emotional check-ins that foster self-awareness and self-regulation. By integrating directly with Google Classroom, the ecosystem builds a "Safety Circle" bridging the child's internal emotional world with actionable insights for parents and educators.
+
+Core Pillars:
+	1. Cognitive Behavioral Therapy (CBT): Emphasizing the cyclical connection between situations, thoughts, physical sensations, feelings, and behaviors.
+	2. Plutchik Model of Emotions: An evolutionary framework categorizing emotions into 8 primary sectors, with varying intensities (0-100), opposite pairs, and mapped physiological responses.
+
+2. Core Data & Technical Architecture
+- The Plutchik-Sensation Map (Core Database): The central schema that categorizes all user inputs into one of 8 primary emotion sectors, mapping specific body sensations (e.g., Hot Stove, Heavy Puddle) to emotional states.
+- AI NLP Requirement (BERT Model): The system will utilize a fine-tuned BERT NLP model to analyze the child's free-text inputs.
+Output 1: Primary Emotion Label (e.g., Anger, Joy, Fear).
+Output 2: Intensity Score (0–100) to distinguish between annoyance (0-40), anger (41-79), and rage (80-100).
+- Google Classroom API: Secure syncing for student rosters, single sign-on (SSO), and guardian contact lists.
+
+3. Product Features: Module 1 (Sky Scout App - Child UI)
+Clinical Constraint: The system must enforce a page-by-page guided workflow. The user cannot advance without providing input.
+Epic 1: Part 1 - Self-Awareness Workflow
+Goal: Map the CBT cycle and externalize the emotion.
+- Page 1: The Initial Sky Tone: Visual selection of 4 base states.
+	- ☀️ Sunny (I feel good/excited)
+	- ☁️ Cloudy (I feel okay/unsure)
+	- 🌧️ Rainy (I feel sad/slow)
+	- ⛈️ Stormy (I feel angry/overwhelmed)
+- Pages 2–6: The 5-Gate Weather Report: One prompt per page; answers stored as user variables.
+	- Gate 1 (Situation): "What happened to bring this weather to your sky?"
+	- Gate 2 (Thought): "What is your brain whispering inside?"
+	- Gate 3 (Sensations): "Check your Body Weather. What does your body feel like?" (Leverages Plutchik Body Weather Map clues).
+	- Gate 4 (Feeling): "If you had to name this feeling right now, what would it be?"
+	- Gate 5 (Behavior): "What does that feeling make your body want to do?"
+- Page 7: The "Sky Match" Challenge:
+	- Logic: BERT predicts the Plutchik emotion + intensity based on Gate 2 (Thought) and Gate 4 (Feeling).
+	- UI Game: Generates 3 buckets—Predicted Emotion, Plutchik Opposite (Distractor), and Adjacent Wheel Emotion (Dyad).
+	- Action: Child drags their 4 collected variables (Thought, Sensation, Feeling, Behavior) into the correct bucket. The UI requires a 4/4 match to pass.
+- Page 8: Externalization ("Meet Your Visitor"):
+	- Generates a color-coded cartoon character based on the Plutchik petal (e.g., Red "Fizz" for Anger/Rage; Blue "Puddles" for Sadness).
+	- Script: "Look, Scout! You caught all the pieces. That’s Fizz, the Rage cloud. Fizz is just a visitor in your sky today!"
+	- Feature: "Save State" option to pause and return for Part 2 later in the day.
+
+Epic 2: Part 2 - Self-Regulation Workflow
+Goal: Empower the child to actively regulate their nervous system based on clinical data points.
+- Page 9: The Trigger Confirmation: Validates the child's experience using Part 1 variables (e.g., "Let's help Fizz. You said Fizz is crackling because [Situation]. Ready to find some calm?").
+- Page 10: The Suggestion Menu:
+	- UI shows the generated Sky Character interacting with the Situation.
+	- AI recommends 3 tailored "Sky Tools" based on the Sensation variable (e.g., if "Hot Stove" -> 🌬️ Dragon Breath, 🍋 Lemon Squeeze, 🧱 Wall Push).
+- Page 11: Guided Interaction: Step-by-step interactive guidance using rhythmic, calming language and visual pacing (e.g., 3-second tense, 3-second release animations).
+- Page 12: Transformation & Re-Check:
+	- Visuals: Sky Character transforms to a calm/alleviated state.
+	- Re-Check: "How is your Sky Tone now?" (Prompts Page 1 options).
+	- Persistence Logic: If Rainy/Stormy is selected again, offer a choice to try another tool or "sit with the feeling." Provide an empathetic exit (e.g., "Some clouds need extra time...") with a passive activity suggestion.
+
+4.Product Features: Module 2 (Antigravity AI Coordinator - Adult UI)
+Goal: Foster a "Safety Circle" (Student, Parent, Teacher) using automated data intelligence and tiered intervention protocols.
+
+Epic 3: Data Intelligence & Reporting
+- Weekly Synthesis (Sundays): AI evaluates daily check-in data for:
+	- Emotional patterning and intensity distributions.
+	- Vocabulary growth (congruence between text and Plutchik wheel).
+	- Regulation success rates.
+- Automated Reporting: Generates a "Google Guardian Summary" (parents) and "Clinical Insight Report" (teachers).
+
+Epic 4: Flagging Protocols & Triage
+- The "Rule of 3" Flag: Automatically triggers a Risk Flag if over 3 consecutive sessions a student:
+	1. Stays "Stormy/Rainy" without moving to "Sunny" post-regulation.
+	2. Exhibits declining self-awareness/incongruent labeling.
+	3. Abandons regulation activities (Part 2) entirely.
+- The "Double Flag" Triage (Teacher Dashboard):
+	- Elevates a student to "System Red Flag" if the child triggers the Rule of 3 AND the parent is unresponsive to feedback prompts or indicates no support is occurring at home.
+	- Action: Notifies the teacher to intervene physically/directly with the family.
+
+Epic 5: Parent Engagement & Coaching Loop
+- Weekly Short-Form Check-in: Sent alongside the Guardian Summary. Asks 3 simple questions: validation, dialogue confirmation, and support needs.
+- Mandatory Deep-Dive: Triggered only if the child is Flagged. Forces parents to outline recent home behaviors, validate the AI report, and state their support plan.
+- Automated Coaching AI:
+	- Empathic Scripts: Gives parents exact phrasing to validate feelings without judgment.
+	- Role Modeling Guides: Instructions on narrating adult self-regulation out loud for the child to hear.
+	- Weekly Bond Missions: Curated weekend activities customized to the child's recent emotional trends (e.g., specific reading materials, conversation starters).
+
+Epic 6: Crisis & Safety Protocol (P0 / Critical)
+- Real-Time Detection: Independent, continuously running NLP sentiment analysis scanning all open-text inputs for self-harm, suicidal ideation, abuse, or violence keywords.
+- Immediate Bypass Action: If triggered, bypasses all weekly scheduling delays.
+- Simultaneous Alert: Sends immediate, urgent notifications to Teacher, School Counselor, and Parents.
+- Compliance Lock: Program cannot be launched for a student without a digitally signed "Safety and Privacy Consent" form on file via Google Classroom.
+
+5. UI/UX & Design Constraints
+- Accessibility: Must adhere to WCAG 2.1 AA standards. Font choices must be dyslexic-friendly (e.g., Comic Sans, OpenDyslexic, or similar clean sans-serif).
+- Color Psychology: UI colors must adapt to the emotional context (soft, neutral backgrounds for data entry; Plutchik-aligned colors for the Sky Characters).
+- Tone of Voice:
+	- Child Facing: Clinically sound, deeply empathetic, highly encouraging, non-punitive, and rhythmic.
+	- Adult Facing: Professional, observant, actionable, and structured.
+
+6. Success Metrics & KPIs
+	1. Engagement Rate: % of students completing daily Part 1 check-ins > 80%.
+	2. Regulation Conversion: % of students successfully transitioning from Stormy/Rainy to Cloudy/Sunny after completing Part 2 > 60%.
+	3. Parent Loop Closure: % of parents responding to the Weekly Check-in > 70%.
+	4. Vocabulary Growth: Month-over-month increase in the variety of specific feeling words used in Gate 4.
+	5. Double Flag Resolution Time: Average time taken by teachers to acknowledge and act on a "System Red Flag" (Target: < 24 hours).
