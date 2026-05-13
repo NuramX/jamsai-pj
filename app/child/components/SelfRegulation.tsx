@@ -98,27 +98,28 @@ export default function SelfRegulation({ step, appState, updateState, onNext }: 
 
   if (step === 11) {
     return (
-      <div className="glass-panel p-10 text-center shadow-2xl relative w-full flex flex-col items-center min-h-[400px] justify-center">
-        <h2 className="text-3xl font-bold mb-8 text-slate-800">ลมหายใจมังกร</h2>
+      <div className="glass-panel p-10 text-center shadow-2xl relative w-full flex flex-col items-center min-h-[450px] justify-center">
+        <h2 className="text-3xl font-bold mb-4 text-slate-800 z-20">ลมหายใจมังกร</h2>
         
         {breathCount < 3 ? (
-          <>
-            <motion.div 
-              className="w-48 h-48 rounded-full bg-blue-200 flex items-center justify-center mb-8 relative"
-              animate={{ 
-                scale: breathingPhase === "in" ? 1.5 : breathingPhase === "out" ? 1 : 1.5,
-                backgroundColor: breathingPhase === "in" ? "#bfdbfe" : breathingPhase === "hold" ? "#93c5fd" : "#dbeafe"
-              }}
-              transition={{ duration: 3, ease: "easeInOut" }}
-            >
-              <span className="text-2xl font-bold text-blue-700 absolute z-10">
+          <div className="flex flex-col items-center justify-center flex-1 w-full my-8">
+            <div className="relative w-72 h-72 flex items-center justify-center">
+              <motion.div 
+                className="w-48 h-48 rounded-full flex items-center justify-center absolute"
+                animate={{ 
+                  scale: breathingPhase === "in" ? 1.5 : breathingPhase === "out" ? 1 : 1.5,
+                  backgroundColor: breathingPhase === "in" ? "#bfdbfe" : breathingPhase === "hold" ? "#93c5fd" : "#dbeafe"
+                }}
+                transition={{ duration: 3, ease: "easeInOut" }}
+              />
+              <span className="text-2xl font-bold text-blue-800 z-10 drop-shadow-sm">
                 {breathingPhase === "in" && "สูดหายใจเข้า..."}
                 {breathingPhase === "hold" && "กลั้นไว้..."}
                 {breathingPhase === "out" && "เป่าออกช้าๆ..."}
               </span>
-            </motion.div>
-            <p className="text-slate-500 font-medium">รอบที่ {breathCount + 1} / 3</p>
-          </>
+            </div>
+            <p className="text-slate-500 font-medium mt-4 z-20 relative">รอบที่ {breathCount + 1} / 3</p>
+          </div>
         ) : (
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center">
             <Sparkles size={64} className="text-amber-400 mb-4" />
