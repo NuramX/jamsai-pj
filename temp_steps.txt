@@ -1,0 +1,185 @@
+
+// ================= STEP 10: SELF-REGULATION TOOLS =================
+function Step10({ onNext }: { onNext: () => void }) {
+  return (
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col min-h-screen bg-[#f8f9fb] pb-24">
+      
+      <div className="pt-12 px-6 flex flex-col items-center">
+        {/* Header like Step 8 */}
+        <div className="flex flex-col items-center w-full mb-6">
+           <h1 className="text-sm font-bold text-gray-600 mb-4 tracking-widest">แจ่มใส</h1>
+        </div>
+
+        {/* Title Section */}
+        <div className="bg-white/50 backdrop-blur-sm rounded-[2.5rem] p-8 w-full max-w-sm mb-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex flex-col items-center text-center border border-white">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-100 to-amber-50 flex items-center justify-center mb-6 shadow-sm border-2 border-white">
+             <CloudLightning size={40} className="text-rose-500" />
+          </div>
+          
+          <h2 className="text-2xl font-bold text-[#1e293b] mb-4">Let's help Fizz.</h2>
+          <p className="text-gray-600 font-medium text-sm leading-relaxed">
+            ฟิซกำลังรู้สึกเปรี๊ยะๆ เพราะหอคอยเลโก้โดนพัง เราควรใช้เครื่องมือท้องฟ้าชิ้นไหนดีนะ?
+          </p>
+        </div>
+
+        {/* Tools */}
+        <div className="w-full max-w-sm flex flex-col gap-4">
+          <button onClick={onNext} className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#e0f2fe] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Wind size={28} className="text-[#0369a1]" />
+            </div>
+            <h3 className="text-[#0369a1] font-bold text-lg mb-1">Dragon Breath</h3>
+            <p className="text-gray-500 text-sm font-medium">Deep, slow breaths to cool down.</p>
+          </button>
+          
+          <button className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#ffedd5] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform text-3xl">
+              🍋
+            </div>
+            <h3 className="text-[#9a3412] font-bold text-lg mb-1">Lemon Squeeze</h3>
+            <p className="text-gray-500 text-sm font-medium">Tense and release your muscles.</p>
+          </button>
+
+          <button className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#fee2e2] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform text-3xl">
+              🧱
+            </div>
+            <h3 className="text-[#7f1d1d] font-bold text-lg mb-1">Wall Push</h3>
+            <p className="text-gray-500 text-sm font-medium">Use heavy work to feel grounded.</p>
+          </button>
+        </div>
+
+        <div className="mt-8 mb-4">
+          <div className="inline-flex items-center gap-2 bg-gray-200/50 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-bold text-gray-500">Page 10 of 12</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ================= STEP 11: DRAGON BREATH (EXERCISE) =================
+function Step11({ onNext }: { onNext: () => void }) {
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col min-h-screen bg-gradient-to-b from-[#f0f9ff] to-[#e0f2fe] relative overflow-hidden">
+      
+      {/* Header */}
+      <div className="pt-12 px-6 pb-6 flex flex-col items-center relative z-10">
+        <button onClick={onNext} className="absolute right-6 top-12 w-10 h-10 bg-white/50 rounded-full flex items-center justify-center text-gray-600 hover:bg-white transition-colors backdrop-blur-sm">
+          <X size={20} />
+        </button>
+        
+        <h1 className="text-xs font-bold text-[#0369a1] mb-2 uppercase tracking-widest">Step 2 of 3</h1>
+        
+        <div className="w-24 flex justify-center gap-1.5 mb-2">
+          <div className="flex-[2] h-1.5 bg-[#0369a1] rounded-full"></div>
+          <div className="flex-1 h-1.5 bg-white/60 rounded-full"></div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-8 pb-12 z-10 w-full max-w-sm mx-auto">
+        <h2 className="text-4xl font-extrabold text-[#0369a1] mb-4 text-center">Dragon Breath</h2>
+        <p className="text-[#334155] font-medium text-center text-lg max-w-xs mb-12 leading-relaxed">
+          Take a deep breath in... and blow the heat away like a Dragon!
+        </p>
+
+        {/* Breathing Animation Container */}
+        <div className="relative flex items-center justify-center mb-12">
+          <motion.div 
+            className="absolute w-80 h-80 rounded-full bg-[#bae6fd] opacity-40 blur-3xl"
+            animate={{ scale: [1, 1.5, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="w-48 h-48 rounded-full bg-gradient-to-br from-sky-100 to-sky-50 shadow-xl border-4 border-white flex items-center justify-center text-7xl z-10 relative overflow-hidden"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            🐲
+          </motion.div>
+        </div>
+
+        <motion.div 
+          className="text-2xl font-bold text-[#0ea5e9]/80 mb-12"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          Breathe...
+        </motion.div>
+
+        {/* Action Button */}
+        <div className="w-full mt-auto">
+          <button 
+            onClick={onNext}
+            className="w-full bg-[#1e6091] hover:bg-[#184e77] text-white py-4 px-8 rounded-full font-bold text-xl flex items-center justify-center gap-3 shadow-[0_10px_30px_-10px_rgba(30,96,145,0.5)] transition-all transform hover:scale-105"
+          >
+            <span>I feel cooler</span>
+            <Heart size={22} className="stroke-[2.5]" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ================= STEP 12: FINAL CHECK-IN =================
+function Step12({ onNext }: { onNext: () => void }) {
+  const tones = [
+    { id: 'sunny', icon: <Sun size={32} className="text-amber-500" />, label: 'Sunny' },
+    { id: 'cloudy', icon: <Cloud size={32} className="text-slate-500" />, label: 'Cloudy' },
+    { id: 'rainy', icon: <CloudRain size={32} className="text-blue-500" />, label: 'Rainy' },
+    { id: 'stormy', icon: <CloudLightning size={32} className="text-gray-800" />, label: 'Stormy' },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col min-h-screen bg-[#f0f9ff] py-12 px-6">
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center">
+        
+        {/* Progress */}
+        <div className="text-[#0369a1] text-xs font-bold tracking-widest uppercase mb-2">
+          Page 12 of 12
+        </div>
+        <div className="w-full h-1.5 bg-[#1e6091] rounded-full mb-8"></div>
+
+        {/* Content Card */}
+        <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-8 shadow-xl w-full flex flex-col items-center text-center mt-12">
+          
+          <div className="w-32 h-32 rounded-full bg-pink-100 shadow-inner border-4 border-white flex items-center justify-center text-6xl mb-6 relative -mt-20">
+             😊
+          </div>
+
+          <h2 className="text-4xl font-extrabold text-[#0369a1] mb-4 leading-tight">
+            How is your<br/>Sky Tone<br/>now?
+          </h2>
+
+          <p className="text-gray-600 font-medium mb-8 leading-relaxed px-2">
+            Every cloud is welcome in your sky, Scout. You did a great job taking care of your weather today!
+          </p>
+
+          <div className="grid grid-cols-2 gap-4 w-full mb-8">
+            {tones.map((tone) => (
+              <button 
+                key={tone.id}
+                className="bg-white hover:bg-gray-50 border border-gray-100 rounded-[1.5rem] p-6 shadow-sm flex flex-col items-center justify-center gap-3 transition-transform hover:scale-105"
+              >
+                {tone.icon}
+                <span className="font-extrabold text-[#1e293b]">{tone.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <button 
+            onClick={onNext}
+            className="w-full bg-[#1e6091] hover:bg-[#184e77] text-white py-4 px-8 rounded-full font-bold text-xl flex items-center justify-center gap-2 shadow-md transition-colors"
+          >
+            <span>Finish</span>
+            <CheckCircle size={22} className="stroke-2" />
+          </button>
+        </div>
+        
+      </div>
+    </motion.div>
+  );
+}

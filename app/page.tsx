@@ -1,46 +1,58 @@
 "use client";
 
-import { useState } from "react";
-import { Settings, Mic, Brush, ArrowRight, Cloud, CloudRain, CloudLightning, Sun, Wind, Frown, GripVertical, CloudDrizzle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Settings, Mic, Brush, ArrowRight, Cloud, CloudRain, CloudLightning, Sun, Wind, Frown, GripVertical, CloudDrizzle, Heart, CheckCircle, X } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function App() {
+export default function Home() {
   const [step, setStep] = useState(1);
+  const [answers, setAnswers] = useState({
+    situation: "",
+    thought: "",
+    sensation: "",
+    behavior: ""
+  });
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
-      <div className="w-full max-w-[400px] h-[850px] max-h-screen bg-[#f8f9fb] shadow-2xl overflow-hidden relative flex flex-col sm:rounded-[2.5rem] border-8 border-white">
-        
-        {/* Render the current step */}
-        <div className="flex-1 overflow-y-auto pb-24 scrollbar-hide">
-          {step === 1 && <Step1 onNext={() => setStep(2)} />}
-          {step === 2 && <Step2 onNext={() => setStep(7)} onBack={() => setStep(1)} />}
-          {step === 7 && <Step7 onNext={() => setStep(1)} />}
-        </div>
+    <div className="min-h-screen bg-[#f8f9fb] flex flex-col font-sans relative">
+      
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-y-auto pb-24 w-full max-w-4xl mx-auto flex flex-col scrollbar-hide">
+        {step === 1 && <Step1 onNext={() => setStep(2)} />}
+        {step === 2 && <GateStep gateNumber={1} gateTitle="Situation" pageNumber={2} question="What happened to bring this weather to your sky?" value={answers.situation} onChange={(v) => setAnswers({...answers, situation: v})} onNext={() => setStep(3)} onBack={() => setStep(1)} />}
+        {step === 3 && <GateStep gateNumber={2} gateTitle="Thought" pageNumber={3} question="What is your brain whispering inside?" value={answers.thought} onChange={(v) => setAnswers({...answers, thought: v})} onNext={() => setStep(4)} onBack={() => setStep(2)} />}
+        {step === 4 && <GateStep gateNumber={3} gateTitle="Sensations" pageNumber={4} question="Check your Body Weather. What does your body feel like?" value={answers.sensation} onChange={(v) => setAnswers({...answers, sensation: v})} onNext={() => setStep(5)} onBack={() => setStep(3)} />}
+        {step === 5 && <GateStep gateNumber={4} gateTitle="Behavior" pageNumber={5} question="What does that feeling make your body want to do?" value={answers.behavior} onChange={(v) => setAnswers({...answers, behavior: v})} onNext={() => setStep(6)} onBack={() => setStep(4)} />}
+        {step === 6 && <SkyMatch answers={answers} onNext={() => setStep(7)} />}
+        {step === 7 && <MeetVisitor onNext={() => setStep(8)} />}
+        {step === 8 && <SuggestionMenu onNext={() => setStep(9)} />}
+        {step === 9 && <GuidedInteraction onNext={() => setStep(10)} />}
+        {step === 10 && <FinalCheckIn onNext={() => setStep(1)} />}
+      </div>
 
-        {/* Bottom Navigation (for Step 1 and 7) */}
-        {(step === 1 || step === 7) && (
-          <div className="absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center px-2 py-3 pb-6">
-            <button className="flex flex-col items-center gap-1 min-w-[72px]">
-              <div className={`px-4 py-1.5 rounded-full ${step === 1 ? 'bg-[#93c5fd]' : 'bg-transparent'}`}>
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 z-[100]">
+        <div className="max-w-md mx-auto flex justify-around items-center px-4 py-3 pb-safe">
+          <button className="flex flex-col items-center gap-1 min-w-[72px]">
+              <div className={`px-4 py-1.5 rounded-full transition-colors ${step === 1 ? 'bg-[#93c5fd]' : 'bg-transparent hover:bg-gray-100'}`}>
                 <Cloud size={24} className={step === 1 ? 'text-[#0369a1]' : 'text-gray-500'} />
               </div>
               <span className={`text-[11px] font-bold ${step === 1 ? 'text-[#0369a1]' : 'text-gray-500'}`}>Sky</span>
             </button>
             <button className="flex flex-col items-center gap-1 min-w-[72px]">
-              <div className="px-4 py-1.5 rounded-full bg-transparent">
+              <div className="px-4 py-1.5 rounded-full bg-transparent hover:bg-gray-100 transition-colors">
                 <Brush size={24} className="text-gray-500" />
               </div>
               <span className="text-[11px] font-bold text-gray-500">Journal</span>
             </button>
             <button className="flex flex-col items-center gap-1 min-w-[72px]">
-              <div className={`px-4 py-1.5 rounded-full ${step === 7 ? 'bg-[#93c5fd]' : 'bg-transparent'}`}>
+              <div className={`px-4 py-1.5 rounded-full transition-colors ${step === 7 ? 'bg-[#93c5fd]' : 'bg-transparent hover:bg-gray-100'}`}>
                 <CloudLightning size={24} className={step === 7 ? 'text-[#0369a1]' : 'text-gray-500'} />
               </div>
               <span className={`text-[11px] font-bold ${step === 7 ? 'text-[#0369a1]' : 'text-gray-500'}`}>Visitors</span>
             </button>
             <button className="flex flex-col items-center gap-1 min-w-[72px]">
-              <div className="px-4 py-1.5 rounded-full bg-transparent">
+              <div className="px-4 py-1.5 rounded-full bg-transparent hover:bg-gray-100 transition-colors">
                 <div className="flex items-end gap-0.5 h-6">
                   <div className="w-1.5 h-3 bg-gray-500 rounded-full"></div>
                   <div className="w-1.5 h-4 bg-gray-500 rounded-full"></div>
@@ -48,10 +60,8 @@ export default function App() {
                 </div>
               </div>
               <span className="text-[11px] font-bold text-gray-500">Progress</span>
-            </button>
-          </div>
-        )}
-
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -126,39 +136,57 @@ function Step1({ onNext }: { onNext: () => void }) {
   );
 }
 
-// ================= STEP 2: SITUATION =================
-function Step2({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
-  const [text, setText] = useState("");
+// ================= GATE STEP (Reusable for Steps 2-5) =================
+function GateStep({ 
+  gateNumber, 
+  gateTitle, 
+  pageNumber, 
+  question, 
+  value,
+  onChange,
+  onNext, 
+  onBack 
+}: { 
+  gateNumber: number, 
+  gateTitle: string, 
+  pageNumber: number, 
+  question: string, 
+  value: string,
+  onChange: (v: string) => void,
+  onNext: () => void, 
+  onBack: () => void 
+}) {
 
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col h-full bg-[#f8f9fb]">
       <div className="pt-16 px-6 pb-6 text-center">
         <div className="text-[#0369a1] text-xs font-bold tracking-widest uppercase mb-3">
-          Gate 1: Situation
+          Gate {gateNumber}: {gateTitle}
         </div>
         
         <div className="flex justify-center gap-1.5 mb-3">
-          <div className="w-8 h-1.5 bg-[#93c5fd] rounded-full"></div>
-          <div className="w-8 h-1.5 bg-[#0369a1] rounded-full"></div>
-          <div className="w-8 h-1.5 bg-gray-200 rounded-full"></div>
-          <div className="w-8 h-1.5 bg-gray-200 rounded-full"></div>
-          <div className="w-8 h-1.5 bg-gray-200 rounded-full"></div>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div 
+              key={i} 
+              className={`w-8 h-1.5 rounded-full ${i < gateNumber ? 'bg-[#0369a1]' : i === gateNumber ? 'bg-[#93c5fd]' : 'bg-gray-200'}`}
+            ></div>
+          ))}
         </div>
         
         <div className="text-sm font-medium text-gray-500 mb-8">
-          Page 2 of 12
+          Page {pageNumber} of 10
         </div>
 
         <h2 className="text-3xl leading-tight font-extrabold text-[#1e293b] mb-8">
-          What happened to bring this weather to your sky?
+          {question}
         </h2>
 
         <div className="bg-white rounded-[2rem] p-6 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.05)] min-h-[350px] flex flex-col relative text-left">
           <textarea 
             className="w-full flex-1 bg-transparent border-none outline-none resize-none text-lg text-[#1e293b] placeholder-gray-400"
             placeholder="Start typing or draw here..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
           />
           
           <div className="absolute bottom-6 left-6 right-6 flex gap-3 pt-6 border-t border-gray-100">
@@ -172,87 +200,559 @@ function Step2({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full bg-[#f8f9fb] border-t border-gray-200 px-6 py-6 flex justify-between items-center">
-        <button onClick={onBack} className="text-[#0369a1] font-bold px-4 py-2">
-          Back
-        </button>
-        <button 
-          onClick={onNext}
-          disabled={!text}
-          className={`px-8 py-3.5 rounded-full font-bold flex items-center gap-2 transition-colors ${text ? 'bg-[#e2e8f0] hover:bg-gray-300 text-[#1e293b]' : 'bg-[#e2e8f0] text-gray-500'}`}
-        >
-          <span>Next</span>
-          <ArrowRight size={18} />
-        </button>
+      <div className="fixed bottom-[72px] left-0 w-full bg-[#f8f9fb]/95 backdrop-blur-md border-t border-gray-200 px-6 py-4 flex justify-between items-center z-50">
+        <div className="w-full max-w-4xl mx-auto flex justify-between items-center">
+          <button onClick={onBack} className="text-[#0369a1] font-bold px-4 py-2 hover:bg-blue-50 rounded-lg transition-colors">
+            Back
+          </button>
+          <button 
+            onClick={onNext}
+            disabled={!value.trim()}
+            className={`px-8 py-3.5 rounded-full font-bold flex items-center gap-2 transition-colors ${value.trim() ? 'bg-[#e2e8f0] hover:bg-gray-300 text-[#1e293b]' : 'bg-[#e2e8f0] text-gray-500'}`}
+          >
+            <span>Next</span>
+            <ArrowRight size={18} />
+          </button>
+        </div>
       </div>
     </motion.div>
   );
 }
 
-// ================= STEP 7: SKY MATCH =================
-function Step7({ onNext }: { onNext: () => void }) {
+// ================= STEP 6: SKY MATCH =================
+import { useRef } from "react";
+
+const initialBucketsData = [
+  { id: 'anger', title: 'Anger', icon: '🌋', bg: 'bg-[#ffe4e6]', border: 'border-[#fecdd3]', pieces: [] as string[] },
+  { id: 'fear', title: 'Fear', icon: '💨', bg: 'bg-[#dcfce7]', border: 'border-[#bbf7d0]', pieces: [] as string[] },
+  { id: 'annoyance', title: 'Annoyance', icon: '☹️', bg: 'bg-[#ffe4e6]', border: 'border-[#fecdd3]', pieces: [] as string[] },
+];
+
+function SkyMatch({ answers, onNext }: { answers: { situation: string, thought: string, sensation: string, behavior: string }, onNext: () => void }) {
+  const dynamicPieces = [
+    { id: 'p1', type: 'SITUATION', text: answers.situation || '...', icon: '🌤️', bgColor: 'bg-blue-100', iconColor: 'text-blue-700' },
+    { id: 'p2', type: 'THOUGHT', text: answers.thought || '...', icon: '🧠', bgColor: 'bg-amber-100', iconColor: 'text-amber-700' },
+    { id: 'p3', type: 'PHYSIOLOGICAL SENSATION', text: answers.sensation || '...', icon: '🔥', bgColor: 'bg-red-100', iconColor: 'text-red-700' },
+    { id: 'p4', type: 'BEHAVIOR', text: answers.behavior || '...', icon: '⚡', bgColor: 'bg-stone-200', iconColor: 'text-stone-700' },
+  ];
+
+  const [buckets, setBuckets] = useState(initialBucketsData);
+  const [resultPhase, setResultPhase] = useState<'playing' | 'tie' | 'result'>('playing');
+  const [finalEmotion, setFinalEmotion] = useState('');
+  const [tiedEmotions, setTiedEmotions] = useState<typeof initialBucketsData>([]);
+  const bucketRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const handleDragEnd = (event: any, info: any, pieceId: string) => {
+    // info.point is relative to the page document, not the viewport
+    const { x, y } = info.point;
+    
+    for (const [bucketId, el] of Object.entries(bucketRefs.current)) {
+      if (!el) continue;
+      
+      // getBoundingClientRect is relative to viewport, so we add window scroll
+      const rect = el.getBoundingClientRect();
+      const rectTop = rect.top + window.scrollY;
+      const rectBottom = rect.bottom + window.scrollY;
+      const rectLeft = rect.left + window.scrollX;
+      const rectRight = rect.right + window.scrollX;
+      
+      // Check collision with a generous 20px padding to make dropping easier
+      if (x >= rectLeft - 20 && x <= rectRight + 20 && y >= rectTop - 20 && y <= rectBottom + 20) {
+        setBuckets(prev => prev.map(b => {
+          if (b.id === bucketId && !b.pieces.includes(pieceId)) {
+            return { ...b, pieces: [...b.pieces, pieceId] };
+          }
+          return b;
+        }));
+        break;
+      }
+    }
+  };
+
+  const handleFinish = () => {
+    let maxCount = -1;
+    let maxBuckets: typeof initialBucketsData = [];
+
+    buckets.forEach(b => {
+      const count = b.pieces.length;
+      if (count > maxCount) {
+        maxCount = count;
+        maxBuckets = [b];
+      } else if (count === maxCount) {
+        maxBuckets.push(b);
+      }
+    });
+
+    if (maxCount === 0) {
+      alert("กรุณาลากอย่างน้อย 1 ชิ้นส่วนลงตะกร้าก่อนครับ!");
+      return;
+    }
+
+    if (maxBuckets.length > 1) {
+      setTiedEmotions(maxBuckets);
+      setResultPhase('tie');
+    } else {
+      setFinalEmotion(maxBuckets[0].title);
+      setResultPhase('result');
+    }
+  };
+
+  if (resultPhase === 'tie') {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center h-full bg-[#f8f9fb]">
+        <h2 className="text-3xl font-extrabold text-[#0369a1] mb-4">สูสีกันมากเลย! 🤔</h2>
+        <p className="text-lg text-gray-600 mb-8 px-4">
+          ฟิซดูจะมีอารมณ์หลายอย่างปนกัน เธอคิดว่าอารมณ์ไหนตรงกับฟิซที่สุดตอนนี้?
+        </p>
+        <div className="flex flex-col gap-4 w-full max-w-sm">
+          {tiedEmotions.map(b => (
+            <button 
+              key={b.id} 
+              onClick={() => { setFinalEmotion(b.title); setResultPhase('result'); }} 
+              className={`p-6 rounded-[2rem] shadow-sm hover:shadow-md transition-all font-bold text-2xl flex items-center justify-center gap-4 border-2 border-dashed ${b.bg} ${b.border} text-[#1e293b]`}
+            >
+               <span className="text-4xl">{b.icon}</span> {b.title}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (resultPhase === 'result') {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center h-full bg-[#f8f9fb]">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }} className="text-7xl mb-6">🎉</motion.div>
+        <h2 className="text-3xl font-extrabold text-[#0369a1] mb-2">สรุปผล!</h2>
+        <p className="text-lg text-gray-600 mb-8">อารมณ์ที่เป็นผู้มาเยือนของเธอวันนี้คือ...</p>
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} delay={0.3} className="bg-white p-10 rounded-[3rem] shadow-[0_8px_30px_-15px_rgba(0,0,0,0.1)] border-4 border-[#fecdd3] mb-12 w-full max-w-sm">
+           <h3 className="text-4xl font-black text-rose-600 uppercase tracking-wider">{finalEmotion}</h3>
+        </motion.div>
+        <button onClick={onNext} className="bg-[#1e6091] text-white px-8 py-4 rounded-full font-bold text-xl flex items-center gap-3 shadow-lg hover:bg-[#184e77] transition-colors">
+           ไปทำความรู้จักผู้มาเยือนกันเลย <ArrowRight size={22} />
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col h-full bg-[#f8f9fb]">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col min-h-screen bg-[#f8f9fb]">
       <Header />
       
-      <div className="px-6 text-center">
+      <div className="px-6 text-center pb-24">
         <div className="inline-flex items-center gap-2 bg-[#e0f2fe] px-4 py-1.5 rounded-full mb-4">
           <CloudDrizzle size={14} className="text-[#0369a1]" />
-          <span className="text-xs font-bold text-[#0369a1]">Page 7 of 12</span>
+          <span className="text-xs font-bold text-[#0369a1]">Page 6 of 10</span>
         </div>
 
         <h2 className="text-4xl font-extrabold text-[#0369a1] mb-2">Sky Match</h2>
-        <p className="text-gray-600 font-medium mb-8">Drag your pieces into the right bucket!</p>
+        <p className="text-gray-600 font-medium mb-8">ลากชิ้นส่วนทางซ้ายมือ ไปใส่ในตะกร้าอารมณ์ที่ตรงกัน (1 ชิ้นใส่ได้หลายตะกร้านะ!)</p>
 
         {/* Your Pieces */}
-        <div className="bg-white rounded-[2rem] p-6 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.05)] mb-8 text-left">
-          <h3 className="text-lg font-bold text-[#0369a1] flex items-center gap-2 mb-4">
-            <span className="text-xl">🧩</span> Your Pieces
+        <div className="bg-white/80 backdrop-blur-sm rounded-[1.5rem] p-4 shadow-sm mb-6 text-left border border-white z-20 relative">
+          <h3 className="text-base font-bold text-[#0369a1] flex items-center gap-2 mb-3">
+            <span className="text-lg">🧩</span> Your Pieces
           </h3>
 
-          <div className="flex flex-col gap-3">
-            <Piece icon="🧠" type="THOUGHT" text='"It&apos;s not fair!"' bgColor="bg-amber-100" iconColor="text-amber-700" />
-            <Piece icon="🔥" type="SENSATION" text="Hot face, tight chest" bgColor="bg-red-100" iconColor="text-red-700" />
-            <Piece icon="⚡" type="BEHAVIOR" text="Clenched fists" bgColor="bg-stone-200" iconColor="text-stone-700" />
+          <div className="grid grid-cols-1 gap-2 relative">
+            {dynamicPieces.map((p) => (
+              <motion.div
+                key={p.id}
+                drag
+                dragSnapToOrigin
+                onDragEnd={(e, info) => handleDragEnd(e, info, p.id)}
+                whileDrag={{ scale: 1.05, zIndex: 50, cursor: 'grabbing' }}
+                className={`border border-gray-100 rounded-xl p-3 flex items-center gap-3 bg-white shadow-sm cursor-grab active:cursor-grabbing`}
+              >
+                <div className={`w-10 h-10 rounded-full ${p.bgColor} flex items-center justify-center text-lg flex-shrink-0`}>
+                  {p.icon}
+                </div>
+                <div className="flex-1">
+                  <div className="text-[10px] font-bold text-gray-800 tracking-wider mb-0.5">{p.type}</div>
+                  <div className="text-sm font-bold text-[#1e293b] leading-tight">{p.text}</div>
+                </div>
+                <GripVertical size={18} className="text-gray-300 flex-shrink-0" />
+              </motion.div>
+            ))}
           </div>
         </div>
 
         {/* Buckets */}
-        <div className="flex flex-col gap-4 pb-8">
-          <Bucket icon="🌋" title="Anger" label="Match" bg="bg-[#ffe4e6]" border="border-[#fecdd3]" />
-          <Bucket icon="💨" title="Fear" label="Not Quite" bg="bg-[#dcfce7]" border="border-[#bbf7d0]" />
-          <Bucket icon="☹️" title="Annoyance" label="Similar" bg="bg-[#ffe4e6]" border="border-[#fecdd3]" />
+        <div className="flex flex-col gap-3 pb-8 z-10 relative">
+          {buckets.map(b => (
+            <div 
+              key={b.id}
+              ref={el => { bucketRefs.current[b.id] = el }}
+              className={`rounded-[1.5rem] p-4 border-2 border-dashed ${b.border} ${b.bg} flex items-center gap-4 relative overflow-hidden transition-all min-h-[90px]`}
+            >
+              <div className="w-14 h-14 rounded-full bg-white/50 flex items-center justify-center text-3xl flex-shrink-0">
+                {b.icon}
+              </div>
+              <div className="flex flex-col flex-1 items-start">
+                <h3 className="text-lg font-bold text-[#1e293b]">{b.title}</h3>
+                
+                {/* Show pieces inside bucket */}
+                <div className="flex flex-wrap gap-1.5 mt-1 min-h-[32px] w-full bg-white/40 rounded-xl p-1.5 border border-white/50">
+                  {b.pieces.length === 0 && (
+                    <span className="text-[10px] text-gray-500 font-medium px-1 flex items-center">Drop here...</span>
+                  )}
+                  {b.pieces.map(pid => {
+                    const p = dynamicPieces.find(x => x.id === pid);
+                    return (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} key={pid} className="w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center text-xs border border-gray-100">
+                        {p?.icon}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Done Button */}
+        <div className="flex justify-center mt-2 pb-8">
+          <button 
+            onClick={handleFinish}
+            className="bg-[#1e6091] hover:bg-[#184e77] text-white px-8 py-3.5 rounded-full font-bold text-lg flex items-center gap-2 shadow-[0_8px_20px_-8px_rgba(30,96,145,0.6)] transition-all transform hover:scale-105"
+          >
+            <span>จับคู่เสร็จแล้ว!</span>
+            <CheckCircle size={20} />
+          </button>
         </div>
       </div>
     </motion.div>
   );
 }
 
-function Piece({ icon, type, text, bgColor, iconColor }) {
+// ================= STEP 7: MEET VISITOR =================
+function MeetVisitor({ onNext }: { onNext: () => void }) {
   return (
-    <div className="border border-gray-100 rounded-2xl p-4 flex items-center gap-4 bg-white shadow-sm">
-      <div className={`w-10 h-10 rounded-full ${bgColor} flex items-center justify-center text-lg`}>
-        {icon}
+    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col min-h-screen bg-[#f8f9fb] relative pb-32">
+      
+      {/* Header */}
+      <div className="pt-12 px-6 pb-6 flex flex-col items-center relative z-10">
+        <button className="absolute left-6 top-12 w-10 h-10 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        
+        <h1 className="text-sm font-bold text-gray-600 mb-4 tracking-widest">แจ่มใส</h1>
+        
+        <div className="w-48 flex justify-center gap-1.5 mb-2">
+          <div className="flex-1 h-2 bg-[#1e6091] rounded-full"></div>
+          <div className="flex-1 h-2 bg-[#1e6091] rounded-full"></div>
+          <div className="flex-1 h-2 bg-gray-200/60 rounded-full"></div>
+        </div>
+        
+        <div className="text-xs font-bold text-gray-500">
+          Page 7 of 10
+        </div>
       </div>
-      <div className="flex-1">
-        <div className="text-[10px] font-bold text-gray-800 tracking-wider mb-0.5">{type}</div>
-        <div className="text-sm font-bold text-[#1e293b]">{text}</div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center px-6 z-10 w-full max-w-2xl mx-auto">
+        
+        {/* Character Illustration Placeholder */}
+        <motion.div 
+          className="w-64 h-64 rounded-full bg-gradient-to-tr from-rose-100 to-amber-50 border-4 border-white shadow-[0_10px_40px_-10px_rgba(225,29,72,0.2)] mb-8 flex flex-col items-center justify-center relative overflow-hidden"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {/* Decorative background clouds/sun */}
+          <Sun size={40} className="absolute top-8 right-8 text-amber-300 opacity-50" />
+          <Cloud size={60} className="absolute bottom-10 left-4 text-blue-200 opacity-50" />
+          
+          {/* The Character */}
+          <CloudLightning size={100} className="text-rose-500 drop-shadow-md mb-2" />
+          <div className="flex gap-4 absolute top-1/2 -mt-4">
+             <div className="w-2 h-2 bg-rose-900 rounded-full"></div>
+             <div className="w-2 h-2 bg-rose-900 rounded-full"></div>
+          </div>
+          <div className="w-4 h-1 bg-rose-900 rounded-full mt-2"></div>
+          
+          <h2 className="absolute bottom-6 text-2xl font-black text-rose-800 tracking-wider font-mono">FIZZ</h2>
+        </motion.div>
+
+        {/* Text Card */}
+        <div className="bg-white/95 backdrop-blur-sm rounded-[2rem] p-8 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.05)] text-center w-full max-w-xl mb-10">
+          <p className="text-lg font-bold text-[#1e293b] mb-6 leading-relaxed">
+            Look, Scout! You caught all the pieces.
+          </p>
+          
+          <h2 className="text-2xl font-extrabold text-[#1e293b] mb-6 leading-snug">
+            That's <span className="text-rose-600">Fizz</span>, the <br/>Rage cloud.
+          </h2>
+          
+          <p className="text-[#475569] font-medium leading-relaxed">
+            Fizz is just a visitor in your sky today!
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="w-full max-w-xl flex flex-col md:flex-row items-center gap-6 mt-auto">
+          <button 
+            onClick={onNext}
+            className="w-full bg-[#1e6091] hover:bg-[#184e77] text-white py-4 px-8 rounded-full font-bold text-lg flex items-center justify-center gap-3 shadow-lg transition-colors"
+          >
+            <span>Ready to help Fizz?</span>
+            <ArrowRight size={20} />
+          </button>
+          
+          <button className="text-gray-600 font-bold text-sm hover:text-gray-800 transition-colors">
+            Save for later
+          </button>
+        </div>
+        
       </div>
-      <GripVertical size={20} className="text-gray-300" />
-    </div>
+    </motion.div>
   );
 }
 
-function Bucket({ icon, title, label, bg, border }) {
+// ================= STEP 8: SUGGESTION MENU =================
+function SuggestionMenu({ onNext }: { onNext: () => void }) {
   return (
-    <div className={`rounded-[2rem] p-6 border-2 border-dashed ${border} ${bg} flex flex-col items-center justify-center py-10 relative overflow-hidden`}>
-      <div className="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center text-3xl mb-4">
-        {icon}
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col min-h-screen bg-[#f8f9fb] pb-32">
+      
+      <div className="pt-12 px-6 flex flex-col items-center w-full max-w-4xl mx-auto">
+        {/* Header like Step 8 */}
+        <div className="flex flex-col items-center w-full mb-6 relative">
+          <button className="absolute left-0 top-0 w-10 h-10 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors">
+             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <h1 className="text-sm font-bold text-gray-600 tracking-widest mt-2">แจ่มใส</h1>
+        </div>
+
+        {/* Title Section */}
+        <div className="bg-white/50 backdrop-blur-sm rounded-[2.5rem] p-8 w-full max-w-2xl mb-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex flex-col items-center text-center border border-white">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-100 to-amber-50 flex items-center justify-center mb-6 shadow-sm border-2 border-white">
+             <CloudLightning size={40} className="text-rose-500" />
+          </div>
+          
+          <h2 className="text-2xl font-bold text-[#1e293b] mb-4">Let's help Fizz.</h2>
+          <p className="text-gray-600 font-medium text-sm leading-relaxed">
+            ฟิซกำลังรู้สึกเปรี๊ยะๆ เพราะหอคอยเลโก้โดนพัง เราควรใช้เครื่องมือท้องฟ้าชิ้นไหนดีนะ?
+          </p>
+        </div>
+
+        {/* Tools */}
+        <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6">
+          <button onClick={onNext} className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#e0f2fe] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Wind size={28} className="text-[#0369a1]" />
+            </div>
+            <h3 className="text-[#0369a1] font-bold text-lg mb-1">Dragon Breath</h3>
+            <p className="text-gray-500 text-sm font-medium">Deep, slow breaths to cool down.</p>
+          </button>
+          
+          <button className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#ffedd5] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform text-3xl">
+              🍋
+            </div>
+            <h3 className="text-[#9a3412] font-bold text-lg mb-1">Lemon Squeeze</h3>
+            <p className="text-gray-500 text-sm font-medium">Tense and release your muscles.</p>
+          </button>
+
+          <button className="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col items-center text-center group">
+            <div className="w-16 h-16 rounded-full bg-[#fee2e2] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform text-3xl">
+              🧱
+            </div>
+            <h3 className="text-[#7f1d1d] font-bold text-lg mb-1">Wall Push</h3>
+            <p className="text-gray-500 text-sm font-medium">Use heavy work to feel grounded.</p>
+          </button>
+        </div>
+
+        <div className="mt-8 mb-4">
+          <div className="inline-flex items-center gap-2 bg-gray-200/50 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-bold text-gray-500">Page 8 of 10</span>
+          </div>
+        </div>
       </div>
-      <h3 className="text-xl font-bold text-[#1e293b] mb-2">{title}</h3>
-      <div className="bg-white/60 px-3 py-1 rounded-full text-[10px] font-bold text-gray-700 uppercase tracking-wider">
-        {label}
+    </motion.div>
+  );
+}
+
+// ================= STEP 9: GUIDED INTERACTION (DRAGON BREATH) =================
+function GuidedInteraction({ onNext }: { onNext: () => void }) {
+  const [phase, setPhase] = useState<'in' | 'hold' | 'out' | 'done'>('in');
+  const [cycle, setCycle] = useState(1);
+
+  useEffect(() => {
+    if (phase === 'done') return;
+
+    let timeout: NodeJS.Timeout;
+
+    if (phase === 'in') {
+      timeout = setTimeout(() => setPhase('hold'), 4000); // Breathe in for 4s
+    } else if (phase === 'hold') {
+      timeout = setTimeout(() => setPhase('out'), 2000); // Hold for 2s
+    } else if (phase === 'out') {
+      timeout = setTimeout(() => {
+        if (cycle >= 3) {
+          setPhase('done');
+        } else {
+          setCycle(c => c + 1);
+          setPhase('in');
+        }
+      }, 4000); // Breathe out for 4s
+    }
+
+    return () => clearTimeout(timeout);
+  }, [phase, cycle]);
+
+  const getPhaseText = () => {
+    switch (phase) {
+      case 'in': return 'หายใจเข้าลึกๆ... (Breathe In)';
+      case 'hold': return 'กลั้นไว้... (Hold)';
+      case 'out': return 'เป่าลมออกยาวๆ... (Breathe Out)';
+      case 'done': return 'เก่งมาก! (Great job!)';
+      default: return '...';
+    }
+  };
+
+  const getScale = () => {
+    if (phase === 'in' || phase === 'hold') return 1.5;
+    return 1;
+  };
+
+  const getDuration = () => {
+    if (phase === 'in') return 4;
+    if (phase === 'hold') return 2;
+    if (phase === 'out') return 4;
+    return 1;
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col min-h-screen bg-[#f8f9fb] relative overflow-hidden pb-32">
+      
+      {/* Header */}
+      <div className="pt-12 px-6 pb-6 flex flex-col items-center relative z-10">
+        <button onClick={onNext} className="absolute right-6 top-12 w-10 h-10 bg-white/50 rounded-full flex items-center justify-center text-gray-600 hover:bg-white transition-colors backdrop-blur-sm">
+          <X size={20} />
+        </button>
+        
+        <h1 className="text-xs font-bold text-[#0369a1] mb-2 uppercase tracking-widest">Page 9 of 10</h1>
+        
+        <div className="w-24 flex justify-center gap-1.5 mb-2">
+          <div className="flex-[2] h-1.5 bg-[#0369a1] rounded-full"></div>
+          <div className="flex-1 h-1.5 bg-white/60 rounded-full"></div>
+        </div>
       </div>
-    </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-4 z-10 w-full max-w-2xl mx-auto">
+        <h2 className="text-4xl font-extrabold text-[#0369a1] mb-2 text-center">Dragon Breath</h2>
+        <p className="text-[#334155] font-medium text-center text-md max-w-xs mb-8 leading-relaxed">
+          Take a deep breath in... and blow the heat away like a Dragon!
+        </p>
+
+        {/* Breathing Animation Container */}
+        <div className="relative flex items-center justify-center mb-16 h-64">
+          <motion.div 
+            className="absolute w-48 h-48 rounded-full bg-[#bae6fd] opacity-50 blur-2xl"
+            animate={{ scale: getScale() }}
+            transition={{ duration: getDuration(), ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="w-40 h-40 rounded-full bg-gradient-to-br from-sky-100 to-sky-50 shadow-xl border-4 border-white flex items-center justify-center text-6xl z-10 relative overflow-hidden"
+            animate={{ scale: getScale() }}
+            transition={{ duration: getDuration(), ease: "easeInOut" }}
+          >
+            🐲
+          </motion.div>
+        </div>
+
+        {/* Dynamic Breathing Text */}
+        <div className="h-20 flex flex-col items-center justify-center mb-4">
+          <motion.div 
+            key={phase}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`text-2xl font-extrabold text-center ${phase === 'done' ? 'text-green-600' : 'text-[#0ea5e9]'}`}
+          >
+            {getPhaseText()}
+          </motion.div>
+          {phase !== 'done' && (
+            <div className="text-sm font-bold text-gray-500 mt-2">
+              รอบที่ {cycle} จาก 3
+            </div>
+          )}
+        </div>
+
+        {/* Action Button */}
+        <div className="w-full max-w-md mt-auto">
+          <button 
+            onClick={onNext}
+            className={`w-full py-4 px-8 rounded-full font-bold text-xl flex items-center justify-center gap-3 shadow-lg transition-all transform hover:scale-105 ${phase === 'done' ? 'bg-[#1e6091] hover:bg-[#184e77] text-white shadow-[0_10px_30px_-10px_rgba(30,96,145,0.5)]' : 'bg-white/80 text-[#0369a1] border-2 border-[#1e6091]'}`}
+          >
+            <span>I feel cooler</span>
+            <Heart size={22} className={phase === 'done' ? 'stroke-[2.5]' : 'stroke-2 fill-transparent'} />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ================= STEP 10: FINAL CHECK-IN =================
+function FinalCheckIn({ onNext }: { onNext: () => void }) {
+  const tones = [
+    { id: 'sunny', icon: <Sun size={32} className="text-amber-500" />, label: 'Sunny' },
+    { id: 'cloudy', icon: <Cloud size={32} className="text-slate-500" />, label: 'Cloudy' },
+    { id: 'rainy', icon: <CloudRain size={32} className="text-blue-500" />, label: 'Rainy' },
+    { id: 'stormy', icon: <CloudLightning size={32} className="text-gray-800" />, label: 'Stormy' },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col min-h-screen bg-[#f8f9fb] py-12 px-6 pb-32">
+      <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
+        
+        {/* Progress */}
+        <div className="text-[#0369a1] text-xs font-bold tracking-widest uppercase mb-2">
+          Page 10 of 10
+        </div>
+        <div className="w-full h-1.5 bg-[#1e6091] rounded-full mb-8"></div>
+
+        {/* Content Card */}
+        <div className="bg-white/90 backdrop-blur-md rounded-[2.5rem] p-8 shadow-xl w-full flex flex-col items-center text-center mt-12">
+          
+          <div className="w-32 h-32 rounded-full bg-pink-100 shadow-inner border-4 border-white flex items-center justify-center text-6xl mb-6 relative -mt-16">
+             😊
+          </div>
+
+          <h2 className="text-4xl font-extrabold text-[#0369a1] mb-4 leading-tight">
+            How is your<br/>Sky Tone<br/>now?
+          </h2>
+
+          <p className="text-gray-600 font-medium mb-8 leading-relaxed px-2">
+            Every cloud is welcome in your sky, Scout. You did a great job taking care of your weather today!
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mb-8">
+            {tones.map((tone) => (
+              <button 
+                key={tone.id}
+                className="bg-white hover:bg-gray-50 border border-gray-100 rounded-[1.5rem] p-6 shadow-sm flex flex-col items-center justify-center gap-3 transition-transform hover:scale-105"
+              >
+                {tone.icon}
+                <span className="font-extrabold text-[#1e293b]">{tone.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <button 
+            onClick={onNext}
+            className="w-full max-w-md bg-[#1e6091] hover:bg-[#184e77] text-white py-4 px-8 rounded-full font-bold text-xl flex items-center justify-center gap-2 shadow-md transition-colors"
+          >
+            <span>Finish</span>
+            <CheckCircle size={22} className="stroke-2" />
+          </button>
+        </div>
+        
+      </div>
+    </motion.div>
   );
 }

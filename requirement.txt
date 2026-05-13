@@ -26,13 +26,12 @@ Goal: Map the CBT cycle and externalize the emotion.
 	- ☁️ Cloudy (I feel okay/unsure)
 	- 🌧️ Rainy (I feel sad/slow)
 	- ⛈️ Stormy (I feel angry/overwhelmed)
-- Pages 2–6: The 5-Gate Weather Report: One prompt per page; answers stored as user variables.
+- Pages 2–5: The 5-Gate Weather Report: One prompt per page; answers stored as user variables.
 	- Gate 1 (Situation): "What happened to bring this weather to your sky?"
 	- Gate 2 (Thought): "What is your brain whispering inside?"
 	- Gate 3 (Sensations): "Check your Body Weather. What does your body feel like?" (Leverages Plutchik Body Weather Map clues).
-	- Gate 4 (Feeling): "If you had to name this feeling right now, what would it be?"
-	- Gate 5 (Behavior): "What does that feeling make your body want to do?"
-- Page 7: The "Sky Match" Challenge:
+	- Gate 4 (Behavior): "What does that feeling make your body want to do?"
+- Page 6: The "Sky Match" Challenge:
 	- Logic: BERT predicts the Plutchik emotion + intensity based on Gate 2 (Thought) and Gate 4 (Feeling).
 	- UI Game: Generates 3 buckets—Predicted Emotion, Plutchik Opposite (Distractor), and Adjacent Wheel Emotion (Dyad).
 	- Action: Child drags their 4 collected variables (Thought, Sensation, Feeling, Behavior) into the correct bucket. The UI requires a 4/4 match to pass.
