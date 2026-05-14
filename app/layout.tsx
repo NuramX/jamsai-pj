@@ -9,8 +9,8 @@ const mitr = Mitr({
 })
 
 export const metadata: Metadata = {
-  title: 'แจ่มใส (Jamsai) — สะพานเชื่อมใจเด็ก คุณครู และครอบครัว',
-  description: 'ระบบดูแลสุขภาพจิตเด็กแบบองค์รวม ผ่าน CBT และ Plutchik Model',
+  title: 'แจ่มใส: สะพานเชื่อมใจ',
+  description: 'แจ่มใส (Jamsai) — สะพานเชื่อมใจเด็ก คุณครู และครอบครัว',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

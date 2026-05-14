@@ -72,9 +72,8 @@ function Header({ showProgress = false, step = 1, totalSteps = 10 }) {
     <div className="px-6 pt-10 pb-4">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center overflow-hidden border-2 border-teal-700">
-            {/* Simple Fox avatar representation */}
-            <div className="text-xl">🦊</div>
+          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden border border-gray-200">
+            <img src="/icon.png" alt="แจ่มใส" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-xl font-extrabold text-[#0369a1] tracking-tight">แจ่มใส</h1>
         </div>
