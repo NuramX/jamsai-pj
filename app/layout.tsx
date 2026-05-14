@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
+import { Mitr } from 'next/font/google'
 import './globals.css'
 
-const nunito = Nunito({ subsets: ['latin'], weight: ['400', '600', '700', '800'], variable: '--font-nunito' })
+const mitr = Mitr({ 
+  subsets: ['latin', 'thai'], 
+  weight: ['200', '300', '400', '500', '600', '700'], 
+  variable: '--font-mitr' 
+})
 
 export const metadata: Metadata = {
   title: 'แจ่มใส (Jamsai) — สะพานเชื่อมใจเด็ก คุณครู และครอบครัว',
@@ -12,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="th">
-      <body className={`${nunito.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${mitr.variable} font-sans antialiased`}>{children}</body>
     </html>
   )
 }
