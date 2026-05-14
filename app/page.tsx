@@ -288,7 +288,7 @@ function SkyMatch({ answers, onNext }: { answers: { situation: string, thought: 
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center h-full bg-[#f8f9fb]">
         <h2 className="text-3xl font-extrabold text-[#0369a1] mb-4">สูสีกันมากเลย! 🤔</h2>
         <p className="text-lg text-gray-600 mb-8 px-4">
-          ฟิซดูจะมีอารมณ์หลายอย่างปนกัน เธอคิดว่าอารมณ์ไหนตรงกับฟิซที่สุดตอนนี้?
+          คุณดูจะมีอารมณ์หลายอย่างปะปนกัน ลองดูว่าอารมณ์ไหนตรงกับอารมณ์ตอนนี้มากที่สุด?
         </p>
         <div className="flex flex-col gap-4 w-full max-w-sm">
           {tiedEmotions.map(b => (
